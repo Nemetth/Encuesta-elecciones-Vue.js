@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="assets/style.css" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ"
+      crossorigin="anonymous"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+      rel="stylesheet"
+    />
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.7.14/vue.min.js"
+      integrity="sha512-BAMfk70VjqBkBIyo9UTRLl3TBJ3M0c6uyy2VMUrq370bWs7kchLNN9j1WiJQus9JAJVqcriIUX859JOm12LWtw=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <title>Cuestionario Elecciones 2023</title>
+  </head>
+  <body>
+    <div id="app">
+      <h1 class="py-5">Cuestionario Elecciones 2023</h1>
+      <h2>Instrucciones</h2>
+      <p class="hero-text px-5">
+        El objetivo de este cuestionario es, en primera instancia, recolectar
+        información sobre el usuario en cuanto a sus elecciones políticas. Esta
+        encuesta está dirigida a personas entre los {{edadMinima}} y los
+        {{edadMaxima}} años que pueden votar en las elecciones del 2023.
+      </p>
+      <!--       PASO 1 DATOS PERSONALES -->
+      <main class="d-flex justify-content-center">
+        <form
+          class="d-flex flex-column align-items-center"
+          action="Proximamente.html"
+        >
+          <h2>Paso 1. Datos personales</h2>
+          <label for="nombre">Nombre</label>
+          <input
+            type="text"
+            id="nombre"
+            name="nombre"
+            v-model="nombre"
+            @input="eliminarNumerosNombre"
+          />
+          <label for="apellido">Apellido</label>
+          <input
+            type="text"
+            id="apellido"
+            name="apellido"
+            v-model="apellido"
+            @input="eliminarNumerosApellido"
+          />
+          <!--       V-BIND CON LA EDAD . NO OLVIDAR VALIDAR TAMBIEN DE VERDAD, NO SOLO COLORES-->
+          <label for="edad">Edad</label>
+          <input
+            type="number"
+            id="edad"
+            name="edad"
+            v-model="edad"
+            :min="16"
+            :max="60"
+            @input="actualizarEdad"
+            :class="{ 'input-valid': edadValida, 'input-invalid': !edadValida }"
+          />
+          <p class="invalid" v-if="edad !== null && (edad < 16 || edad > 60)">
+            La edad debe ser mayor a 16 años y menor a 60
+          </p>
+          <label for="provincia">¿En qué provincia votás?</label>
+          <provincias></provincias>
+          <label for="terminos"
+            >¿Estás de acuerdo en compartir tus datos con Encuestas SA?</label
+          >
+          <input
+            type="checkbox"
+            id="terminos"
+            name="terminos"
+            v-model="terminos"
+            :disabled="!nombre || !apellido || (edad<16 || edad>60)"
+            required
+          />
+
+          <!--       PASO 2 DATOS ELECCIONES PASADAS -->
+
+          <div v-if="nombre && apellido && terminos===true">
+            <h2>Paso 2. Voto 2019</h2>
+            <personales
+              v-if="nombre && apellido"
+              saludo="Hola"
+              :nombre="nombre"
+              :apellido="apellido"
+            ></personales>
+
+            <p class="p-encuesta">
+              ¿Votó en las últimas elecciones presidenciales?
+            </p>
+            <!--       EL CHECK DE LA PREGUNTA DETERMINA SI LA PREGUNTA QUE VIENE LUEGO SE MUESTRA O NO -->
+            <div class="d-flex justify-content-evenly">
+              <div>
+                <input
+                  type="radio"
+                  id="votosi"
+                  name="voto"
+                  v-model="isChecked"
+                />
+                <label for="votosi">Si</label>
+              </div>
+              <div>
+                <input
+                  type="radio"
+                  id="votono"
+                  name="voto"
+                  value="votono"
+                  v-model="isChecked"
+                />
+                <label for="votono">No</label>
+              </div>
+            </div>
+            <div v-if="!isChecked">
+              <p class="p-encuesta">
+                ¿A quién votaste en las últimas elecciones?
+              </p>
+              <candidatos></candidatos>
+            </div>
+            <div v-else class="pb-5">
+              <p class="p-encuesta">¿Por qué no votaste?</p>
+              <div class="d-flex justify-content-evenly">
+                <input
+                  type="radio"
+                  id="interes"
+                  name="novoto"
+                  value="interes"
+                  checked
+                />
+                <label for="interes">No me interesa la política</label>
+                <input type="radio" id="menor" name="novoto" value="menor" />
+                <label for="menor">Era menor de edad</label>
+                <input type="radio" id="fisico" name="novoto" value="fisico" />
+                <label for="fisico">Estaba imposibilitado fisicamente</label>
+              </div>
+            </div>
+            <button class="btn">CONTINUAR</button>
+          </div>
+        </form>
+      </main>
+      <!--     ÈSTE DIV ES EL DIV FINAL DE LA APP -->
+    </div>
+    <script
+      src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.7/dist/umd/popper.min.js"
+      integrity="sha384-zYPOMqeu1DAVkHiLqWBUTcbYfZ8osu1Nd6Z89ify25QV9guujx43ITvfi12/QExE"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.min.js"
+      integrity="sha384-Y4oOpwW3duJdCWv5ly8SCFYWqFDsfob/3GkgExXKV4idmbt98QcxXYs9UoXAB7BZ"
+      crossorigin="anonymous"
+    ></script>
+    <script src="assets/script.js"></script>
+  </body>
+</html>

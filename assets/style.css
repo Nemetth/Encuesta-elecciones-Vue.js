@@ -1,0 +1,96 @@
+* {
+  padding: 0;
+  margin: 0;
+}
+:root {
+  box-sizing: border-box;
+}
+
+h1 {
+  text-align: center;
+  font-family: "Roboto", sans-serif;
+  background-color: #37bbed;
+  color: white !important;
+}
+
+h2 {
+  text-align: center;
+  font-family: "Roboto", sans-serif;
+}
+
+.hero-text {
+  font-family: "Roboto", sans-serif;
+}
+
+.alberto {
+  background-color: #37bbed;
+}
+.mauricio {
+  background-color: #ffd700;
+}
+.roberto {
+  background-color: #474e9c;
+}
+.nicolas {
+  background-color: #f65058;
+}
+.juan {
+  background-color: #307fe2;
+}
+.jose {
+  background-color: #4cb0e4;
+}
+
+form {
+  padding: 2rem;
+  width: 60rem;
+  border: solid 2px;
+}
+input[name="candidato"] {
+  align-items: center;
+}
+
+input[type="checkbox"] {
+  width: 30px;
+  height: 30px;
+}
+
+.saludo {
+  text-align: center;
+  color: #307fe2;
+  font-weight: 800;
+}
+
+.p-encuesta {
+  text-align: center;
+  font-weight: 600;
+}
+
+.btn {
+  align-items: center;
+  padding-top: 50px;
+  width: 100%;
+  height: 40px;
+  background-color: #37bbed !important;
+  border-radius: 15px;
+}
+
+.invalid {
+  color: red;
+}
+
+.input-valid {
+  outline: none;
+  font-weight: 400;
+}
+
+.input-invalid {
+  color: red;
+  border: 1px solid red;
+  outline: none;
+}
+.input-inicio {
+  color: black;
+  border: 1px solid black;
+  outline: none;
+}
